@@ -46,10 +46,23 @@ require __DIR__.'/../vendor/autoload.php';
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-$kernel = $app->make(Kernel::class);
+use App\Models\Cart;
+$cart1 = $app->make(Cart::class);
 
-$response = $kernel->handle(
-    $request = Request::capture()
-)->send();
+//$cart1->adicionarItem('Bike', 200);
+//$cart1->adicionarItem('Tapete', 100);
+//$cart1->adicionarItem('Forno', 300);
 
-$kernel->terminate($request, $response);
+echo 'Valor total: '. $cart1->exibirValorTotal();
+echo '<br />';
+echo 'Status: '. $cart1->exibirStatus();
+
+if ($cart1->confirmarPedido()) {
+    echo '<br />';
+    echo 'Carrinho confirmado';
+} else {
+    echo '<br />';
+    echo 'Carrinho vazio';
+}
+echo '<br />';
+echo 'Status: '. $cart1->exibirStatus();
