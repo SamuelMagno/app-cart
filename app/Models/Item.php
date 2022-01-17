@@ -12,19 +12,19 @@ class Item
         $this->valor = 0;
     }
 
-    public function getDescricao () {
+    public function getDescricao() {
         return $this->descricao;
     }
 
-    public function getValor () {
+    public function getValor() {
         return $this->valor;
     }
 
-    public function setDescricao (string $descricao) {
+    public function setDescricao(string $descricao) {
         $this->descricao = $descricao;
     }
 
-    public function setValor (float $valor ) {
+    public function setValor(float $valor ) {
         $this->valor = $valor;
     }
 }

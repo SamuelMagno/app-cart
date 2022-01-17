@@ -46,23 +46,68 @@ require __DIR__.'/../vendor/autoload.php';
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-use App\Models\Cart;
-$cart1 = $app->make(Cart::class);
+use App\Models\Carrinho;
+use App\Models\Item;
+use App\Models\Pedido;
+use App\Services\EmailService;
 
-//$cart1->adicionarItem('Bike', 200);
-//$cart1->adicionarItem('Tapete', 100);
-//$cart1->adicionarItem('Forno', 300);
+$pedido = new Pedido();
 
-echo 'Valor total: '. $cart1->exibirValorTotal();
-echo '<br />';
-echo 'Status: '. $cart1->exibirStatus();
+$item1 = new Item();
+$item2 = new Item();
 
-if ($cart1->confirmarPedido()) {
-    echo '<br />';
-    echo 'Carrinho confirmado';
-} else {
-    echo '<br />';
-    echo 'Carrinho vazio';
+$item1->setDescricao('Porta copos');
+$item1->setValor(9.90);
+
+$item2->setDescricao('Conjunto 6 Copos');
+$item2->setValor(99.90);
+
+$pedido->getCarrinho()->addItem($item1);
+$pedido->getCarrinho()->addItem($item2);
+
+echo '<h4> Pedido</h4>';
+echo '<pre>';
+print_r($pedido);
+echo '</pre>';
+
+echo '<h4> Itens</h4>';
+echo '<pre>';
+print_r($pedido->getCarrinho()->getItens());
+echo '</pre>';
+
+echo '<h4> Valor do pedido</h4>';
+echo '<pre>';
+$total = 0;
+foreach($pedido->getCarrinho()->getItens() as $item) {
+    $total += $item->getValor();
 }
-echo '<br />';
-echo 'Status: '. $cart1->exibirStatus();
+echo $total;
+echo '</pre>';
+
+echo '<h4> Carrinho está válido</h4>';
+echo '<pre>';
+print_r($pedido->getCarrinho()->validarCarrinho() ? 'Válido' : 'Inválido');
+echo '</pre>';
+
+echo '<h4> Status do pedido</h4>';
+echo '<pre>';
+print_r($pedido->getStatus());
+echo '</pre>';
+
+echo '<h4> Confirmar pedido</h4>';
+echo '<pre>';
+print_r($pedido->confirmar() ? 'Confirmado' : 'Carrinho inválido');
+echo '</pre>';
+
+echo '<h4> Status do pedido</h4>';
+echo '<pre>';
+print_r($pedido->getStatus());
+echo '</pre>';
+
+echo '<h4> Envia email</h4>';
+echo '<pre>';
+if ($pedido->getStatus() == 'confirmado') {
+   $emailService = new EmailService();
+   echo $emailService->dispararEmail();
+}
+echo '</pre>';
