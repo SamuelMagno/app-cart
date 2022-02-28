@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Cart;
 
-use App\Models\Item;
+use App\Models\Cart\Item;
 class Carrinho 
 {
     private array $itens;

@@ -46,9 +46,9 @@ require __DIR__.'/../vendor/autoload.php';
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-use App\Models\Carrinho;
-use App\Models\Item;
-use App\Models\Pedido;
+use App\Models\Cart\Carrinho;
+use App\Models\Cart\Item;
+use App\Models\Cart\Pedido;
 use App\Services\EmailService;
 
 $pedido = new Pedido();

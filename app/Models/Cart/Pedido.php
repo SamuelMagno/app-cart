@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Cart;
 
-use App\Models\Carrinho;
+use App\Models\Cart\Carrinho;
 class Pedido 
 {
     private string $status;
